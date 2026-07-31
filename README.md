@@ -205,6 +205,5 @@ Cada carpeta es independiente y puede ser:
 
 ---
 
-**Creado por**: MiniMax Agent  
 **Versión**: 1.0.0  
 **Licencia**: Uso personal y educativo
