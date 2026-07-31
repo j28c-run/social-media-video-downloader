@@ -2,6 +2,8 @@
 
 Una colección completa de páginas web para descargar contenido multimedia de las principales plataformas sociales sin marca de agua.
 
+![Vista principal de MediaHub](image.png)
+
 ## 🗂️ Estructura del Proyecto
 
 ```
