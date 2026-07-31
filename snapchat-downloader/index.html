@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapchat Video Downloader - Descarga Snaps Sin Marca</title>
+    <meta name="description"
+        content="Descarga videos de Snapchat sin marca de agua. Spotlight, Stories y Discover. Rápido, gratuito y fácil de usar.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Descarga Snaps al Instante</h1>
+                <p class="hero-subtitle">Videos de Snapchat sin marca de agua • Spotlight, Stories y Discover</p>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-container">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <svg class="input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72" />
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72" />
+                        </svg>
+                        <input type="text" id="snapchatUrl" class="url-input"
+                            placeholder="Pega aquí la URL de Snapchat (Spotlight, Story, Highlight o Discover)"
+                            autocomplete="off">
+                    </div>
+                    <button id="processBtn" class="process-btn">
+                        <span class="btn-text">Procesar</span>
+                        <div class="spinner" style="display: none;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 12a9 9 0 11-6.219-8.56" />
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="snap-card">
+                <div class="snap-media">
+                    <img id="snapCover" class="snap-cover" src="" alt="Snap cover">
+                    <div class="snap-duration" id="snapDuration">--</div>
+                    <div class="snap-type" id="snapType">Spotlight</div>
+                </div>
+
+                <div class="snap-info">
+                    <h2 class="snap-title" id="snapTitle">Título del snap</h2>
+
+                    <div class="author-info">
+                        <img id="authorAvatar" class="author-avatar" src="" alt="Author avatar">
+                        <span class="author-name" id="authorName">@usuario</span>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <svg class="stat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                            <span id="viewCount">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <svg class="stat-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                            <span id="likeCount">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Quality Information -->
+                    <div id="qualityInfo" class="quality-info">
+                        <div class="quality-header">
+                            <span class="quality-label">Calidad detectada:</span>
+                            <div class="quality-indicator"></div>
+                            <span id="qualityText" class="quality-text">Analizando...</span>
+                        </div>
+                        <div class="file-size">
+                            <svg class="size-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span id="sizeText">--</span>
+                        </div>
+                    </div>
+
+                    <div class="download-buttons">
+                        <button id="downloadVideoBtn" class="download-btn primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
+                            <span>Descargar Video (HD)</span>
+                        </button>
+
+                        <div class="secondary-buttons">
+                            <button id="downloadAudioBtn" class="download-btn secondary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                </svg>
+                                <span>Solo Audio</span>
+                            </button>
+
+                            <button id="downloadLowQualityBtn" class="download-btn secondary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                                <span>Calidad Baja</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- URL Examples -->
+        <section class="url-examples">
+            <h3>Formatos de URL Soportados</h3>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-icon">⭐</div>
+                    <h4>Spotlight</h4>
+                    <code>https://www.snapchat.com/@usuario/spotlight/...</code>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">📱</div>
+                    <h4>Stories</h4>
+                    <code>https://www.snapchat.com/@usuario/story/...</code>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🎆</div>
+                    <h4>Highlights</h4>
+                    <code>https://www.snapchat.com/@usuario/highlight/...</code>
+                </div>
+                <div class="example-card">
+                    <div class="example-icon">🌟</div>
+                    <h4>Discover</h4>
+                    <code>https://www.snapchat.com/discover/...</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="how-it-works">
+            <h3>¿Cómo funciona?</h3>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <p>Copia la URL del snap de Snapchat</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <p>Pégala en el campo de arriba</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <p>Haz clic en "Procesar" y descarga</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                    </div>
+                    <h4>Rápido</h4>
+                    <p>Descarga instantánea de snaps</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="16" x2="12" y2="12" />
+                            <line x1="12" y1="8" x2="12.01" y2="8" />
+                        </svg>
+                    </div>
+                    <h4>HD</h4>
+                    <p>Calidad original sin pérdida</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                    </div>
+                    <h4>Sin Marca</h4>
+                    <p>Videos sin watermark</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </div>
+                    <h4>Multi-Usuario</h4>
+                    <p>Cualquier cuenta pública</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Herramienta de descarga de videos de Snapchat • Uso responsable • Solo contenido público</p>
+    </footer>
+
+    <script src="snapchat-script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Accede a descargadores para las principales redes sociales desde un solo lugar.">
+  <title>MediaHub | Descargadores de redes sociales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #f8fafc;
+      --muted: #aab5ca;
+      --panel: rgba(20, 28, 50, .72);
+      --line: rgba(255, 255, 255, .12);
+      --accent: #7c5cff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Inter, system-ui, sans-serif;
+      background: #0b1020;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(20px);
+      opacity: .38;
+    }
+
+    body::before {
+      width: 32rem;
+      height: 32rem;
+      background: #5634c9;
+      top: -15rem;
+      left: -10rem;
+    }
+
+    body::after {
+      width: 28rem;
+      height: 28rem;
+      background: #007ab8;
+      right: -11rem;
+      bottom: -12rem;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      padding: 72px 0 40px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      color: #dcd5ff;
+      font-size: .83rem;
+      font-weight: 700;
+      border: 1px solid rgba(151, 125, 255, .45);
+      border-radius: 999px;
+      background: rgba(108, 82, 223, .14);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 18px 0 16px;
+      font-size: clamp(2.35rem, 5vw, 4.5rem);
+      line-height: 1.04;
+      letter-spacing: -.06em;
+    }
+
+    .intro {
+      max-width: 630px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 48px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+      padding: 24px;
+      overflow: hidden;
+      color: inherit;
+      text-decoration: none;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, .18);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-5px);
+      border-color: var(--color);
+      background: rgba(28, 38, 66, .9);
+      outline: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      right: -55px;
+      bottom: -60px;
+      border-radius: 50%;
+      background: var(--color);
+      opacity: .15;
+    }
+
+    .icon {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      margin-bottom: auto;
+      font-size: 1.55rem;
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--color) 22%, transparent);
+    }
+
+    .card h2 {
+      margin: 28px 0 8px;
+      font-size: 1.28rem;
+      letter-spacing: -.03em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.55;
+    }
+
+    .go {
+      margin-top: 18px;
+      color: var(--color);
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    footer {
+      margin-top: 58px;
+      padding-top: 22px;
+      color: var(--muted);
+      font-size: .83rem;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: min(100% - 28px, 1120px);
+        padding-top: 45px;
+      }
+
+      .grid {
+        margin-top: 34px;
+        gap: 14px;
+      }
+
+      .card {
+        min-height: 195px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <span class="eyebrow">✦ MEDIAHUB</span>
+    <h1>Un solo lugar para tus descargadores.</h1>
+    <p class="intro">Elige una plataforma para abrir su descargador. Utiliza solo contenido público y respeta siempre
+      los derechos de autor y las condiciones de cada red.</p>
+
+    <section class="grid" aria-label="Plataformas disponibles">
+      <a class="card" style="--color:#ff0050" href="tiktok-downloader/index.html"><span class="icon">♪</span>
+        <h2>TikTok</h2>
+        <p>Videos y contenido público de TikTok.</p><span class="go">Abrir descargador →</span>
+      </a>
+      <a class="card" style="--color:#fffc00" href="snapchat-downloader/index.html"><span class="icon">👻</span>
+        <h2>Snapchat</h2>
+        <p>Spotlight, historias y contenido público.</p><span class="go">Abrir descargador →</span>
+      </a>
+      <a class="card" style="--color:#ff0000" href="youtube-downloader/index.html"><span class="icon">▶</span>
+        <h2>YouTube</h2>
+        <p>Videos y audio de YouTube.</p><span class="go">Abrir descargador →</span>
+      </a>
+      <a class="card" style="--color:#e84393" href="instagram-downloader/index.html"><span class="icon">◎</span>
+        <h2>Instagram</h2>
+        <p>Publicaciones, reels e historias públicas.</p><span class="go">Abrir descargador →</span>
+      </a>
+      <a class="card" style="--color:#1877f2" href="facebook-downloader/index.html"><span class="icon">f</span>
+        <h2>Facebook</h2>
+        <p>Videos, fotos y publicaciones públicas.</p><span class="go">Abrir descargador →</span>
+      </a>
+      <a class="card" style="--color:#79cfff" href="twitter-downloader/index.html"><span class="icon">𝕏</span>
+        <h2>X / Twitter</h2>
+        <p>Videos, GIF e imágenes de publicaciones.</p><span class="go">Abrir descargador →</span>
+      </a>
+      <a class="card" style="--color:#ff4500" href="reddit-downloader/index.html"><span class="icon">●</span>
+        <h2>Reddit</h2>
+        <p>Videos, galerías y GIF de Reddit.</p><span class="go">Abrir descargador →</span>
+      </a>
+    </section>
+    <footer>MediaHub · Uso responsable · Respeta los derechos de autor</footer>
+  </main>
+</body>
+
+</html>

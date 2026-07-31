@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Video Downloader - Descarga Posts y Videos</title>
+    <meta name="description" content="Descarga videos, imágenes y GIFs de Reddit sin marca de agua. Posts públicos, videos, imágenes. Rápido y gratuito.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="10" fill="#FF4500"/>
+                        <circle cx="9" cy="11" r="1.5" fill="white"/>
+                        <circle cx="15" cy="11" r="1.5" fill="white"/>
+                        <path d="M12 15c-1.5 0-3 1-3 2.5V19h6v-1.5c0-1.5-1.5-2.5-3-2.5z" fill="white"/>
+                    </svg>
+                </div>
+                <h1 class="hero-title">Descarga de Reddit</h1>
+                <p class="hero-subtitle">Videos, imágenes y GIFs sin marca de agua • Posts públicos • Rápido y seguro</p>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-container">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <svg class="input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.72"/>
+                        </svg>
+                        <input 
+                            type="text" 
+                            id="redditUrl" 
+                            class="url-input" 
+                            placeholder="Pega aquí la URL de Reddit (post, comentario o perfil)"
+                            autocomplete="off"
+                        >
+                    </div>
+                    <button id="processBtn" class="process-btn">
+                        <span class="btn-text">Descargar</span>
+                        <div class="spinner" style="display: none;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+                
+                <!-- URL Examples -->
+                <div class="url-examples">
+                    <p>Ejemplos de URLs compatibles:</p>
+                    <ul>
+                        <li>https://www.reddit.com/r/subreddit/comments/post_id/</li>
+                        <li>https://reddit.com/r/subreddit/comments/post_id/</li>
+                        <li>https://old.reddit.com/r/subreddit/comments/post_id/</li>
+                        <li>https://redd.it/post_id</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section" style="display: none;">
+            <div class="post-preview">
+                <div class="post-header">
+                    <div class="subreddit-info">
+                        <span class="subreddit-name" id="subredditName">r/subreddit</span>
+                        <span class="separator">•</span>
+                        <span class="posted-by">Posted by <span id="authorName">@usuario</span></span>
+                        <span class="separator">•</span>
+                        <span class="post-date" id="postDate">fecha</span>
+                    </div>
+                </div>
+                
+                <div class="post-title-section">
+                    <h3 id="postTitle" class="post-title">Título del post</h3>
+                    <div class="post-flair" id="postFlair" style="display: none;">Flair</div>
+                </div>
+                
+                <div class="post-content">
+                    <div id="postText" class="post-text">Contenido del post</div>
+                    
+                    <div class="media-container" id="mediaContainer" style="display: none;">
+                        <div class="media-grid" id="mediaGrid">
+                            <!-- Media items will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <div class="external-link" id="externalLink" style="display: none;">
+                        <a href="#" id="externalUrl" target="_blank" rel="noopener">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15,3 21,3 21,9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                            <span id="externalLinkText">Enlace externo</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="post-stats">
+                    <div class="stat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>
+                        </svg>
+                        <span id="upvotesCount">0</span>
+                        <span class="stat-label">upvotes</span>
+                    </div>
+                    <div class="stat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <span id="commentsCount">0</span>
+                        <span class="stat-label">comments</span>
+                    </div>
+                    <div class="stat">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"/>
+                        </svg>
+                        <span class="stat-label">Share</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Options -->
+            <div class="download-section">
+                <h4>Opciones de descarga</h4>
+                <div class="download-options">
+                    <div class="option-group">
+                        <h5>Contenido Principal</h5>
+                        <div class="download-buttons">
+                            <button id="downloadVideo" class="download-btn primary" style="display: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5,3 19,12 5,21"/>
+                                </svg>
+                                <span class="btn-text">Descargar Video</span>
+                            </button>
+                            <button id="downloadImages" class="download-btn" style="display: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                                    <polyline points="21,15 16,10 5,21"/>
+                                </svg>
+                                <span class="btn-text">Descargar Imágenes</span>
+                            </button>
+                            <button id="downloadGIF" class="download-btn" style="display: none;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"/>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"/>
+                                </svg>
+                                <span class="btn-text">Descargar GIF</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="option-group">
+                        <h5>Calidad de Video</h5>
+                        <div class="quality-buttons" id="qualityButtons" style="display: none;">
+                            <button class="quality-btn active" data-quality="source">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 12l2 2 4-4"/>
+                                    <circle cx="12" cy="12" r="10"/>
+                                </svg>
+                                Original
+                            </button>
+                            <button class="quality-btn" data-quality="720">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="6" width="18" height="12" rx="2"/>
+                                </svg>
+                                720p
+                            </button>
+                            <button class="quality-btn" data-quality="480">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="6" width="18" height="12" rx="2"/>
+                                </svg>
+                                480p
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quality Info -->
+                <div class="quality-info">
+                    <div class="quality-item">
+                        <span class="quality-label">Tipo:</span>
+                        <span id="contentType" class="quality-value">--</span>
+                    </div>
+                    <div class="quality-item">
+                        <span class="quality-label">Calidad:</span>
+                        <span id="contentQuality" class="quality-value">--</span>
+                    </div>
+                    <div class="quality-item">
+                        <span class="quality-label">Tamaño:</span>
+                        <span id="fileSize" class="quality-value">--</span>
+                    </div>
+                    <div class="quality-item">
+                        <span class="quality-label">Duración:</span>
+                        <span id="contentDuration" class="quality-value">--</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>¿Qué puedes descargar?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21"/>
+                        </svg>
+                    </div>
+                    <h4>Videos</h4>
+                    <p>Videos de posts de Reddit</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                    <h4>Imágenes</h4>
+                    <p>Fotos y galerías de posts</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <h4>GIFs</h4>
+                    <p>Animaciones GIF</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                        </svg>
+                    </div>
+                    <h4>Posts</h4>
+                    <p>Texto y enlaces</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="how-it-works">
+            <h2>¿Cómo funciona?</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Copia la URL</h4>
+                    <p>Encuentra el post, video o imagen que quieres descargar y copia su URL</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Pega y procesa</h4>
+                    <p>Pega la URL en el campo de arriba y presiona "Descargar"</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Descarga sin marca</h4>
+                    <p>Descarga el contenido sin marca de agua en alta calidad</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Descargador de Reddit • Uso responsable • Respeta los derechos de autor</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
